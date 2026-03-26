@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+
+.taskbar-item {
+  @apply flex flex-col! justify-center gap-0.5 items-center rounded-md p-1 size-10 hover:bg-gray-300/10 text-white select-none transition-all duration-100 cursor-pointer;
+}
+
+.taskbar-item-open {
+  @apply bg-neutral-300/10! hover:bg-neutral-100/10! inset-ring inset-ring-neutral-50/5!;
+}
+
+.taskbar-item-open::after {
+  content: "";
+
+  @apply absolute bottom-1 w-4! h-1! rounded-full! bg-neutral-300/35!;
+}
+.taskbar-item-background::after {
+  content: "";
+
+  @apply absolute bottom-1 w-2! h-1! rounded-full! bg-neutral-300/35!;
+}
