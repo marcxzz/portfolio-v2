@@ -1,44 +1,20 @@
 'use client'
 
-import { useState } from "react";
-import Taskbar from "./Taskbar";
+import { useEffect } from "react";
 import { APPS } from "@/lib/apps";
+import Taskbar from "./Taskbar";
 import Window from "./ui/Window";
+import { useWindowsManager } from "@/hooks/windowsManager";
 
 export default function Desktop() {
-  const [appsList, setAppsList] = useState(APPS)
+  const { windows, init } = useWindowsManager()
 
-  const handleTaskbarItemClick = (tbItem) => {
-    const { state, name } = tbItem
-
-    const map = {
-      closed: "open",
-      background: "open",
-      open: "background",
-      fullscreen: "background"
-    }
-
-    setAppsList(prev =>
-      prev.map(w =>
-        w.name === name
-          ? { ...w, state: map[state] }
-          : w
-      )
-    )
-  }
-
-  const handleWindowStateChange = (windowName, newState) => {
-    setAppsList(prev =>
-      prev.map(w =>
-        w.name === windowName
-          ? { ...w, state: newState }
-          : w
-      )
-    )
-  }
+  useEffect(() => {
+    init(APPS)
+  }, [])
 
   return (
-    <div className="absolute w-screen h-screen">
+    <div className="absolute w-screen h-screen overflow-hidden">
       <img src="/assets/images/desktop-wallpaper.webp" alt="Desktop wallpaper" className="w-full h-full object-cover" />
       <div className="absolute top-0 left-0 w-full h-[calc(100vh-64px-32px)]">
         <div className="flex justify-center items-center w-full h-full">
@@ -49,11 +25,11 @@ export default function Desktop() {
       </div>
 
       <div className="absolute top-0 left-0 w-screen h-[calc(100dvh-48px)] z-100">
-        {appsList?.map(app => (
-          <Window app={app} key={app.name} onChange={handleWindowStateChange} />
+        {windows.map(app => (
+          <Window app={app} key={app.name} />
         ))}
       </div>
-      <Taskbar windows={appsList} onItemClick={handleTaskbarItemClick} />
+      <Taskbar />
     </div>
   )
 }
