@@ -15,14 +15,14 @@ export const APPS = [
   },
   {
     id: "projects",
-    name: "My Projects",
+    name: "Projects",
     component: ProjectsWindow,
     icon: IconBriefcase2Filled,
     state: "background"
   },
   {
     id: "stack",
-    name: "My Stack",
+    name: "Stack",
     component: StackWindow,
     icon: IconCode,
     state: "closed"
